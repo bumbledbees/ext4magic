@@ -1,0 +1,101 @@
+0.3.1		Some minor bugs been fixed.
+		new : support for ecryptfs by Magic-function
+
+
+0.3.0		switch to BETA status
+		Some minor bugs been fixed. compiler warnings eliminated
+
+
+0.3.0.pv2	new : a new partial step, recovers journal lost inodes
+		new : support for libext2fs 1.41.x and 1.42.x 
+		BUG : #018449 #018437
+		for file systems > 8TByte some errors fixed	
+
+
+0.3.0.pv1	new : functions for RPM; DBF; XCF(Gimp); ESRI; DjVu and CDF 
+		change : DEB; ZIP; TTF; Gnumeric; some Perl and Python files
+			 Optimization for text based files (not completed yet)
+		
+
+0.3.0-pv0	new : the first experimental version of the magic-functions for ext4
+		disabled : the magic-function for ext3 is switched off in this version
+		
+		change : Most functions in file_type.c are strongly modified, or completely new;
+			 Many functions in magic_block_scan.c been enhanced for the properties of ext4
+			 filetype sorted file names with file extension in the directory MAGIC-2
+		new dependencies: zlib ; bzlib 
+
+
+0.2.3		temporarily separate development branch
+		BUG : 018244
+		change : filetype sorted file names with file extension in the directory MAGIC-2 
+
+
+0.2.2		new : Option -D (Disaster recovery) recover data from severely damaged file systems (Expert-Mode)
+		move : option -Q has been moved to the expert mode(too much confusion for normal users)
+		BUG : Memory leak fixed (ext4 inode extents)
+		BUG : #018106 ext4 extents are displayed partly false
+		change : improved evaluation of directory data blocks
+			 this eliminate some errors in directories with HTREE
+		
+
+
+0.2.1		new : optional Expert-Mode (activate at configure) new Options "-s blocksize" ; "-n blockcount" ; "-c"
+		change : activate magic level 1 and 2 for recover from the root inode
+		BUG : #018040 
+
+
+0.2.0		change :optimization of the ext3 magic scan functions
+		new: support for a lot of images, video and audio
+		new: possibility of the stream orientation. (needed for mp3)
+		change : prevent partially recover on txt and other
+		change : an already restored file tail does not prevent the recover of the entire file
+		BUG: #017694; #017695; #017712
+		 
+
+0.2.0-pv2	new: support and modification for a lot of filetype 
+		change :adjusting settings for version file-5.04
+		change :stabilization of the magic scan functions
+		BUG: segfault if filesystem can not open.
+		BUG: #017625; #017618
+		BUG: #017547; #017556; #017557; #017559; #017562
+		BUG: #017561 change Install HOWTO
+
+
+0.2.0-pv0	BUG: #017447 ; #017453
+		enable the first version of the magic-functions for ext3
+		new Options "-M" and "-m"
+		check header und library in configure
+
+
+0.1.4		BUG: #17387 symlink not restored
+		BUG: #17423 undeleted directory not found
+		BUG: #17425 run-time error "segmentation fault" at the beginning of a directory
+		enable optional support for ext2/3/4 file attributes
+		restore unlinked files
+
+
+
+0.1.3		BUG: crash if no write access to input filename list
+		changes: time option to "-a ...." and "-b ...."
+		changes: time match search for inode in directory
+		changes: BIG ENDIAN swap dirblock
+		changes: checking recover device
+		fix: some small bugs 
+		
+
+
+0.1.2		hardlink database: Changes handling link-count 
+		hardlink database: at end of process print content
+		set_dir_attributes(): create now also empty directories with "-R"
+		new option "-Q" : high quality recover, not use of deleted directory entry  
+		BUG: incorrect cr_time in histogram
+		BUG: recover_file():  socket Inode not ignored
+		BUG: list of special and bad Inodes produce crash
+		BUG: symlink : group and owner not correct 
+		Change some display options
+
+
+
+0.1.1		first complete version
+

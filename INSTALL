@@ -1,0 +1,247 @@
+Install ext4magic
+===================
+
+
+Quick Install HOWTO 
+==================== 
+
+You have to compile the ext4magic source code. It install a binary program /usr/local/sbin/ext4magic and a manpage
+This works only on Linux (also Big-Endian-CPUs)
+Other UNIX operating systems will not compile.
+You need the packages :
+ 
+ gcc
+ make
+
+Furthermore, there are dependencies to following libraries:
+ 
+ libmagic
+ libext2fs
+ libz
+ libbz2
+
+These libraries are present on any Linux, but you need some actual versions.
+Check the version with the following commands:
+
+   # file -v
+   # /sbin/fsck.ext3 -V
+
+the version of "file" must be > 5.03           (file-5.05 and file-5.17 see Known Bugs)
+and the EXT2FS Library version >= 1.41.9       (libext2fs-1.42 see Known Bugs) 
+
+
+
+Under these conditions, installation is fairly simple.
+Install the following devel packages:
+There are possibley different names according your Linux distribution
+
+openSuse                        debian                 Fedora
+----------------------------------------------------------------------
+libext2fs-devel                 e2fslibs-dev        e2fsprogs-devel 
+libuuid-devel                   uuid-dev            libuuid-devel 
+libblkid-devel                  libblkid-dev        libblkid-devel 
+file-devel			libmagic-dev	    file-devel
+zlib-devel			zlib1g-dev		    ?
+libbz2-devel			libbz2-dev		    ?
+
+unzip the archive and cd into the directory
+
+   # tar -xzf ext4magic-?.?.?.tar.gz
+   # cd ext4magic-?.?.?
+
+The following commands to compile ext4magic
+
+   # ./configure
+   # make
+
+and install as root
+
+   # make install
+
+
+this is everything, and it installs the following files
+
+/usr/local/sbin/ext4magic
+/usr/local/share/man/man8/ext4magic.8
+
+
+
+Optional extensions
+====================
+with configure the following extensions can be activated
+
+--enable-expert-mode      #  (recommended) use of file system superblock copies 
+                            and recover from partially destroyed file systems
+
+--enable-file-attr        # restore also file attributes
+
+
+===================================================================================
+
+
+Detailed Install Howto for special cases
+========================================
+
+Following detailed instructions for installing considered special cases,
+depends on the library versions also on older operating systems or
+if the devel package can not be found or if certain libraries to be statically linked.
+
+
+
+The file-command and the library libmagic
+========================================
+In versions ext4magic > 0.1.4  you need the package of the  Linux command "file".
+Needed a version > 5.03 (see also BUG:#017561) for stabil magic-functions in ext4magic.
+Which version is installed displays the following command
+
+# file -v
+
+If found >=  5.04 on your Linux, install also the devel package, or you must create a symlink of the library. (see follow)
+
+
+No version >= 5.04 for your Linux available? You can also install version file-5.??  from source.
+download ftp://ftp.astron.com/pub/file/
+
+You can uninstall the older version of "file" (not recommended) if it has no dependencies to other packages. (eg. perl,apache,...)
+If the old version deleted, the new must necessarily configured to /usr and not to /usr/local.
+
+Or you can install a second version to /usr/local (recommended)
+In this case, do not install the devel package of an old version.
+
+The following illustrates the installation of a second version
+
+ # tar -xzf file-5.04.tar.gz
+ # cd file-5.04
+ # ./configure 
+ # make
+ # su -
+ # cd ????/file-5.04
+ # make install
+ # ldconfig
+
+
+The following command should now show both, the version in "/usr/lib/" and in "/usr/local/lib/"
+(If use a 64-bit system, the library path can also be /usr/lib64 and /usr/local/lib64)
+ # ldconfig -p | grep libmagic
+        libmagic.so.1 (libc6) => /usr/local/lib/libmagic.so.1
+        libmagic.so.1 (libc6) => /usr/lib/libmagic.so.1
+        libmagic.so (libc6) => /usr/local/lib/libmagic.so
+
+In this case, the symlink "/usr/lib/libmagic.so" should not exist. (see follow)
+If the new version libmagic is now not available in /usr/local/... , or the following command failed
+
+ #/usr/local/bin/file -v
+
+then try the following command as root
+ # ldconfig /usr/local/lib /usr/local/lib64
+and check again.
+
+
+Which of the two libmagic versions the finished ext4magic use, you can check with:
+# ldd /usr/local/sbin/ext4magic | grep libmagic
+        libmagic.so.1 => /usr/local/lib/libmagic.so.1 (0xb7741000)
+
+
+
+
+
+If you get the following error during configure ext4magic:
+
+"library libmagic.so >= 5.04 not found, install package "file-5.04" and "file-devel" (workaround see INSTALL)"
+
+and >= "file-5.04" is installed, then no file "libmagic.so" is found, probably the devel package is not installed. 
+Not for all distributions it is available. You can work around that by generate a symlink "libmagic.so" to the 
+existing version of this library. (on a 64-bit system, the library path can also be /usr/lib64 )
+
+see the following log:
+# cd /usr/lib
+# ln -s libmagic.so.1 libmagic.so
+# ls -l /usr/lib/libmagic*
+lrwxrwxrwx 1 root root     13 Sep 23 01:40 /usr/lib/libmagic.so -> libmagic.so.1
+lrwxrwxrwx 1 root root     17 Aug 28 16:09 /usr/lib/libmagic.so.1 -> libmagic.so.1.0.0
+-rwxr-xr-x 1 root root 116720 Oct 24  2009 /usr/lib/libmagic.so.1.0.0
+
+For more than one version of libmagic:
+The version for compiling with ext4magic should have the symlink "libmagic.so"
+another version of libmagic should not have this symlink. 
+
+
+
+
+
+
+
+
+Devel packages and librarys of libext2fs
+========================================
+First check your current version of libext2fs with the following command
+ # /sbin/fsck.ext3 -V
+
+
+
+if Version >= 1.41.9  and not  1.42 
+==================================
+Install the following devel packages:
+There are possibley different names according your Linux distribution
+
+openSuse                        debian                 Fedora
+----------------------------------------------------------------------
+libext2fs-devel                 e2fslibs-dev        e2fsprogs-devel 
+libuuid-devel                   uuid-dev            libuuid-devel 
+libblkid-devel                  libblkid-dev        libblkid-devel 
+file-devel                      libmagic-dev        file-devel
+zlib-devel                      zlib1g-dev                  ?
+libbz2-devel                    libbz2-dev                  ?
+
+
+
+
+then compile ext4magic
+ # tar -xzf ext4magic-0.3.2.tar.gz
+ # cd ext4magic-0.3.2
+ # ./configure --enable-expert-mode
+ # make
+ # su 
+ # make install
+
+
+
+if Version < 1.41.9 ( or if 1.42 )
+===================
+Install the following devel packages:
+There are possibley different names according your Linux distribution
+
+openSuse                        debian                 Fedora
+----------------------------------------------------------------------
+file-devel                      libmagic-dev        file-devel
+zlib-devel                      zlib1g-dev                  ?
+libbz2-devel                    libbz2-dev                  ?
+
+
+download a actual version of e2fsprogs from http://e2fsprogs.sourceforge.net/
+ # tar -xzf e2fsprogs-1.42.9.tar.gz
+ # cd e2fsprogs-1.42.9
+ # ./configure
+ # make
+Important: Please do not install this version. ( !!! do not "make install" !!! 
+this could create problems with programs of your current distribution ..)
+
+
+save the actual directory path of lib/ in a variable for future use in configure commandline.
+# EXT2LIB="$(pwd)/lib"
+
+
+After this, change into the code directory of ext4magic ( Importent: use the same shell where you set EXT2LIB )
+ # tar -xzf ext4magic-0.3.2.tar.gz
+ # cd ext4magic-0.3.2
+ # ./configure --enable-expert-mode CFLAGS="-I$EXT2LIB" LDFLAGS="-L$EXT2LIB" LIBS="-luuid -lcom_err -lpthread -lmagic -lz -lbz2"
+ # make
+ # su
+ # make install
+
+
+ext4magic is so static linked to the newer library. You can see different version of libext2fs by:
+ # ext4magic -V x
+ # /sbin/fsck.ext3 -V
+
+--------------------------------------------------------------------------

@@ -1,0 +1,54 @@
+TODO over of the next year ;-)
+
+- English documentation
+	we working on it, but we need help !!!!!!!
+        the wikisite from Berlios are outsourced to 
+	http://ext4magic.sourceforge.net/ext4magic_en.html
+  Current stat 09.2014: does not look nice, but is informative   
+
+
+- the development in the file-project has negative implications for the quality of the magic function
+	file-5.04 ---> file-5.19 tests reached a negative recovery result of 5% and more
+	ext4magic need a own privat magic database in the future
+	the interface is integrated by ext4magic-0.3.2
+	for first experiments http://ext4magic.sourceforge.net/magic-pattern-interface.html
+ Current stat 09.2014: open
+
+
+- the new Magic-function for ext3
+	old 0.2.x function is very slow and inaccurate
+	and is not compatible with the Magic-functions of the ext4 in 0.3.x
+	a support for both file systems is complex and expensive
+  Current stat 09.2014: postpone
+
+
+- better support for source code and other text files
+	"file" can not detect the text file type if a long comment at begin of the file
+	therefore the Magic-function recovers not all
+	
+	shell example : for a possibility solution approach
+	# file -i ext4magic.c
+	ext4magic.c: text/plain; charset=us-ascii
+
+	# sed '1,/^$/d' ext4magic.c | file -i -
+	/dev/stdin: text/x-c; charset=us-ascii
+  Current stat 09.2014: new libmagic version eliminated the problem.
+	Changes within ext4magic therefore, not required
+
+
+- ext4 : with the Magic-function it should be possible to recover also some file types
+  	if the deleted file has existed with 2 to 4 extents
+	the conditions and preparations are already included
+	the possible individual extents are already collected in the database
+	a function is needed to find out and check the correct order
+  Current stat 09.2014: open
+
+
+Currently known issues
+- on big-endian the crtime and deleted directory entry not correct if use the
+  real libfunction for read the inode.
+- The modified version to read the journal inode works. BUG:#017304 ; #017304
+- libmagic file-5.05 crushed some video/audio formats to postscript trash
+- libmagic file-5.17 many segfaults, not usable for the magic-function of ext4magic
+
+ 

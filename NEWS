@@ -1,0 +1,118 @@
+ext4magic 0.3.2		some minor bugs fixed
+			support for matlab5 files in magic-function
+			interface for furter use of a privat magic pattern file 
+				(see http://ext4magic.sourceforge.net/magic-pattern-interface.html)
+                        ext4magic is moved to http://sourceforge.net/projects/ext4magic/
+ 
+
+ext4magic 0.3.1		new : support for ecryptfs by Magic-function
+
+
+ext4magic 0.3.0		switch to BETA status
+			Some minor bugs been fixed. compiler warnings eliminated
+			English documentation translation is started
+			http://openfacts2.berlios.de/wikien/index.php/BerliosProject:Ext4magic
+
+
+ext4magic 0.3.0 pv2	A new recover sub-step. Inode found in partially overwritten areas of the
+			journal can now also recovers. It is impossible to identify the inode number,
+			the file name and the time of deletion. These files are also restored to the
+			MAGIC-2 directory.
+			ext4magic can now also be compiled with libext2fs-1.42.x  
+			but ext4 file systems >= 16 TByte do not work.
+			Some errors in file system > 8 TByte fixed.
+
+
+
+ext4magic 0.3.0 pv1	New features for restoring Gimp images, many of document formats and
+			enhancements to recover text-based files.
+
+
+ext4magic 0.3.0 pv0	Contains the first experimental version of the magic function for ext4
+			The magic function for ext4 can restore deleted files which
+			consisted of more than 4 extents (includes extra large and sparse files)
+			and files that are unfragmented. (most small and medium-sized files
+			and many large files, are often unfragmented)
+
+			This version can not recover files with 2 to 4 extents. But it's prepared and
+			will be possible in later versions for some file types.
+
+			Depending of the file type, different methods for recovery are used.
+			For most file types specific functions have been developed. 
+
+			Supported the most important file formats for:
+			file archivs, compressed files, a lot off video-, audio- and picture formats,
+			ELF-binary format, Mail, PDF, a lot of text-based file formats, and much more.
+			
+			Tested are more than 50 file formats and if available, also possible
+			variants and subtypes. 
+			Possible, this version will work well for you, possible, it does not work.
+			This version includes a lot of new and experimental code.
+
+			The magic-function for ext3 is switched off in this version. For ext3 use
+			ext4magic 0.2.3
+
+
+
+
+ext4magic 0.2.3		This version is separated from the main development branch.
+			Version 0.2.3 contains the old version of Magic function only for ext3
+			with some new features and bug fixes.
+
+
+
+ext4magic 0.2.2
+			Expansion of the Expert-Mode.
+			With the new "-D" option it is possible to recover data from severely damaged file systems.
+			For example: the file system has been partially overwritten. But large parts of the file
+			system are not destroyed. 
+			
+			improved evaluation of directory data blocks eliminate some errors in directories with HTREE
+			thus, a better file name resolution and fewer files with incorrect names.
+
+
+ext4magic 0.2.1         Optional Expert-Mode with the following new options "-s blocksize" ; "-n blockcount" ; "-c"
+			This makes it possible to open front corrupted file systems.
+
+			Modified flow control allows automatic a recover-all ("-r" or "-R" on the entire file system) 
+			This enables the restore of deleted inode even if the directory inode is not found in journal.
+			The function uses the first two stages of the magic functions (ext3/ext4)
+
+
+ext4magic 0.2.0		The Magic features for ext3 are complete.		
+			Support for most files types of a typical Linux system and lots of multimedia files.
+			
+			
+
+ext4magic 0.2.0 pv2	The magic functions have been adjusted for libmagic (file-5.04)
+			Many bugs have been fixed and added support for many file types
+
+
+
+ext4magic 0.2.0 pv0	First test version of ext3 magic-scan-functions. This is a novel multi-stage recovery.
+			There are several recover methods used in succession. All functions use journal entries.
+			Furthermore, the library libmagic and coded file properties are implemented.
+			This automatic functions are specifically designed to recover deleted files immediate 
+			after a recursiv delete command.
+ 
+			For this purpose two new options are available.
+			"-M"  if the entire file system is deleted
+			"-m"  if only parts of the file system is deleted
+
+
+
+ext4magic 0.1.4		Support for user-modifiable file attributes.
+			ext4magic can now restore the ext2/3/4 File attributes.
+			It is disabled by default. To activate, you must add the option --enable-file-attr
+			when running configure.
+
+
+
+ext4magic 0.1.3 	there is now a german documentation 
+			http://openfacts2.berlios.de/wikide/index.php/BerliosProject:Ext4magic
+
+			We start with the BETA testing and try to find some german users for the
+			tests of general use, the elementary functions and the documentation.
+			The aim is to check the stability and to optimize the german documentation
+			for a translation.
+				

@@ -695,7 +695,7 @@ errcode_t local_block_iterate3(ext2_filsys fs,
 		mark_extent_block(fs, (char*) inode.i_block);
 
 	extent_errout:
-		local_ext2fs_extent_free(handle);
+		ext2fs_extent_free(handle);
 		ret |= BLOCK_ERROR | BLOCK_ABORT;
 		goto errout;
 	}
